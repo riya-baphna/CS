@@ -3,20 +3,43 @@
 #rb4nk
 #Makefile
 
-CXX=clang++ $(CXXFLAGS)
-CXXFLAGS = -Wall -O2 -std=c++11
-OFILES = BinarySearchTree.o BinaryNode.o BSTPathTest.o
- .SUFFIXES: .o .cpp
+# Makefile for CS 2150 pre-lab 8
+# This Makefile shows how to link assembly with C/C++
 
-BinarySearchTree: $(OFILES)
-	$(CXX) $(OFILES)
-        
-	
+# Defines the C++ compiler we'll be using
+CXX	= clang++ -m64
+
+# Defines the flags we'll be passing to the C++ compiler
+CXXFLAGS	= -Wall -g
+
+# Defines the assembler
+AS	= nasm
+
+# Defines the flags for the assembler
+ASFLAGS	= -f elf64 -g
+
+# All of the .o files for our program
+OFILES	= mergeSort.o testMergeSort.o
+
+# This tells make to create a .o file from a .cpp file, using the
+# defaults above (i.e. the CXX and CXXFLAGS macros)
+.SUFFIXES: .o .cpp
+
+# This tells make to create a .o file from a .s file, using the
+# defaults above (i.e. the AS and ASFLAGS macros)
+.SUFFIXES: .o .s
+
+# How to compile our final program.  Note that we do NOT specify an
+# output executable name -- in order for this to work with the grading
+# system, the file needs to be a.out (a.exe in Cygwin).
+main:	$(OFILES)
+	$(CXX) $(CXXFLAGS) $(OFILES)
+
+# This will clean up (remove) all our object files.  The -f option
+# tells rm to forcily remove the files (i.e. don't ask if they should
+# be removed or not).  This removes object files (*.o) and Emacs
+# backup files (*~)
 clean:
-	 -rm -f *.o *~ hashTable
+	/bin/rm -f *.o *~
 
-hashTable.o: hashTable.cpp hashTable.h timer.h
-timer.o: timer.cpp timer.h
-timer_test.o: timer_test.cpp timer.h
-wordPuzzle.o: wordPuzzle.cpp hashTable.h timer.h
-
+# We don't have any dependencies for this small program
