@@ -7,7 +7,7 @@
 # This Makefile shows how to link assembly with C/C++
 
 # Defines the C++ compiler we'll be using
-CXX	= clang
+CXX	= clang++ -m64
 
 # Defines the flags we'll be passing to the C++ compiler
 CXXFLAGS	= -Wall -g
@@ -19,7 +19,7 @@ AS	= nasm
 ASFLAGS	= -f elf64 -g
 
 # All of the .o files for our program
-OFILES	= linkedlist.c
+OFILES	= threeexplusone.o threeexinput.o timer.cpp
 
 # This tells make to create a .o file from a .cpp file, using the
 # defaults above (i.e. the CXX and CXXFLAGS macros)
